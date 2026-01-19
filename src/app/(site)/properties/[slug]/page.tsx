@@ -1,0 +1,201 @@
+"use client"
+import React from 'react';
+import { propertyHomes } from '@/app/api/propertyhomes';
+import { useParams } from "next/navigation";
+import { Icon } from '@iconify/react';
+import { testimonials } from '@/app/api/testimonial';
+import Link from 'next/link';
+import Image from 'next/image';
+
+export default function Details() {
+    const { slug } = useParams();
+
+    const item = propertyHomes.find((item) => item.slug === slug);
+    return (
+        <section className="!pt-44 pb-20 relative" >
+            <div className="container mx-auto max-w-8xl px-5 2xl:px-0">
+                <div className="grid grid-cols-12 items-end gap-6">
+                    <div className="lg:col-span-8 col-span-12">
+                        <h1 className='lg:text-52 text-40 font-semibold text-dark dark:text-white'>{item?.name}</h1>
+                        <div className="flex gap-2.5">
+                            <Icon icon="ph:map-pin" width={24} height={24} className="text-dark/50 dark:text-white/50" />
+                            <p className='text-dark/50 dark:text-white/50 text-xm'>{item?.location}</p>
+                        </div>
+                    </div>
+                    <div className="lg:col-span-4 col-span-12">
+                        <div className='flex'>
+                            <div className='flex flex-col gap-2 border-e border-black/10 dark:border-white/20 pr-2 xs:pr-4 mobile:pr-8'>
+                                <Icon icon={'solar:bed-linear'} width={20} height={20} />
+                                <p className='text-sm mobile:text-base font-normal text-black dark:text-white'>
+                                    {item?.beds} Módulos
+                                </p>
+                            </div>
+                            <div className='flex flex-col gap-2 border-e border-black/10 dark:border-white/20 px-2 xs:px-4 mobile:px-8'>
+                                <Icon icon={'solar:bath-linear'} width={20} height={20} />
+                                <p className='text-sm mobile:text-base font-normal text-black dark:text-white'>
+                                    {item?.baths} Detalles
+                                </p>
+                            </div>
+                            <div className='flex flex-col gap-2 pl-2 xs:pl-4 mobile:pl-8'>
+                                <Icon
+                                    icon={'lineicons:arrow-all-direction'}
+                                    width={20}
+                                    height={20}
+                                />
+                                <p className='text-sm mobile:text-base font-normal text-black dark:text-white'>
+                                    {item?.area}m<sup>2</sup>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="grid grid-cols-12 mt-8 gap-8">
+                    <div className="lg:col-span-8 col-span-12 row-span-2">
+                        {item?.images && item?.images[0] && (
+                            <div className="">
+                                <Image
+                                    src={item.images[0]?.src}
+                                    alt="Main Property Image"
+                                    width={400}
+                                    height={500}
+                                    className="rounded-2xl w-full h-540"
+                                    unoptimized={true}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <div className="lg:col-span-4 lg:block hidden">
+                        {item?.images && item?.images[1] && (
+                            <Image src={item.images[1]?.src} alt="Property Image 2" width={400} height={500} className="rounded-2xl w-full h-full" unoptimized={true} />
+                        )}
+                    </div>
+                    <div className="lg:col-span-2 col-span-6">
+                        {item?.images && item?.images[2] && (
+                            <Image src={item.images[2]?.src} alt="Property Image 3" width={400} height={500} className="rounded-2xl w-full h-full" unoptimized={true} />
+                        )}
+                    </div>
+                    <div className="lg:col-span-2 col-span-6">
+                        {item?.images && item?.images[3] && (
+                            <Image src={item.images[3]?.src} alt="Property Image 4" width={400} height={500} className="rounded-2xl w-full h-full" unoptimized={true} />
+                        )}
+                    </div>
+                </div>
+                <div className="grid grid-cols-12 gap-8 mt-10">
+                    <div className="lg:col-span-8 col-span-12">
+                        <h3 className='text-xl font-medium'>Detalles del proyecto</h3>
+                        <div className="py-8 my-8 border-y border-dark/10 dark:border-white/20 flex flex-col gap-8">
+                            <div className="flex items-center gap-6">
+                                <div>
+                                    <Image src="/images/SVGs/property-details.svg" width={400} height={500} alt="" className='w-8 h-8 dark:hidden' unoptimized={true} />
+                                    <Image src="/images/SVGs/property-details-white.svg" width={400} height={500} alt="" className='w-8 h-8 dark:block hidden' unoptimized={true} />
+                                </div>
+                                <div>
+                                    <h3 className='text-dark dark:text-white text-xm'>Trabajo a medida</h3>
+                                    <p className='text-base text-dark/50 dark:text-white/50'>
+                                        Diseño según tu espacio, estilo y presupuesto.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-6">
+                                <div>
+                                    <Image src="/images/SVGs/smart-home-access.svg" width={400} height={500} alt="" className='w-8 h-8 dark:hidden' unoptimized={true} />
+                                    <Image src="/images/SVGs/smart-home-access-white.svg" width={400} height={500} alt="" className='w-8 h-8 dark:block hidden' unoptimized={true} />
+                                </div>
+                                <div>
+                                    <h3 className='text-dark dark:text-white text-xm'>Instalación profesional</h3>
+                                    <p className='text-base text-dark/50 dark:text-white/50'>
+                                        Fabricación e instalación con buen acabado.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-6">
+                                <div>
+                                    <Image src="/images/SVGs/energyefficient.svg" width={400} height={500} alt="" className='w-8 h-8 dark:hidden' unoptimized={true} />
+                                    <Image src="/images/SVGs/energyefficient-white.svg" width={400} height={500} alt="" className='w-8 h-8 dark:block hidden' unoptimized={true} />
+                                </div>
+                                <div>
+                                    <h3 className='text-dark dark:text-white text-xm'>Materiales de calidad</h3>
+                                    <p className='text-base text-dark/50 dark:text-white/50'>
+                                        Opciones de materiales y herrajes según tu necesidad.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-5">
+                            <p className='text-dark dark:text-white text-xm '>
+                                En Ferrary Cucinas trabajamos proyectos de carpintería a medida: cocinas, clósets, muebles y remodelaciones.
+                                Podemos cotizar con medidas/fotos o con visita para tomar medidas.
+                            </p>
+                            <p className='text-dark dark:text-white text-xm '>
+                                Proceso recomendado: diseño, selección de materiales, fabricación y finalmente instalación.
+                            </p>
+                            <p className='text-dark dark:text-white text-xm '>
+                                Si tu apartamento está en obra gris, también hacemos el proceso de remodelación según lo que necesites.
+                            </p>
+                            <p className='text-dark dark:text-white text-xm '>
+                                Escríbenos por WhatsApp o llámanos para agendar y cotizar.
+                            </p>
+                        </div>
+                        <div className="py-8 mt-8 border-t border-dark/5 dark:border-white/15">
+                            <h3 className='text-xl font-medium'>Lo que ofrecemos</h3>
+                            <div className="grid grid-cols-3 mt-5 gap-6">
+                                <div className="flex items-center gap-2.5">
+                                    <Icon icon="ph:aperture" width={24} height={24} className="text-dark dark:text-white" />
+                                    <p className='text-base dark:text-white text-dark'>Diseño a medida</p>
+                                </div>
+                                <div className="flex items-center gap-2.5">
+                                    <Icon icon="ph:chart-pie-slice" width={24} height={24} className="text-dark dark:text-white" />
+                                    <p className='text-base dark:text-white text-dark'>Asesoría</p>
+                                </div>
+                                <div className="flex items-center gap-2.5">
+                                    <Icon icon="ph:television-simple" width={24} height={24} className="text-dark dark:text-white" />
+                                    <p className='text-base dark:text-white text-dark'>Materiales de calidad</p>
+                                </div>
+                                <div className="flex items-center gap-2.5">
+                                    <Icon icon="ph:sun" width={24} height={24} className="text-dark dark:text-white" />
+                                    <p className='text-base dark:text-white text-dark'>Buen acabado</p>
+                                </div>
+                                <div className="flex items-center gap-2.5">
+                                    <Icon icon="ph:video-camera" width={24} height={24} className="text-dark dark:text-white" />
+                                    <p className='text-base dark:text-white text-dark'>Cumplimiento</p>
+                                </div>
+                                <div className="flex items-center gap-2.5">
+                                    <Icon icon="ph:cloud" width={24} height={24} className="text-dark dark:text-white" />
+                                    <p className='text-base dark:text-white text-dark'>Instalación</p>
+                                </div>
+                            </div>
+                        </div>
+                        <iframe
+                            src="https://www.google.com/maps?q=Cra.%2091D%20%2349B%20Sur%2C%20Bogot%C3%A1%2C%20Colombia&output=embed"
+                            width="1114" height="400" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="rounded-2xl w-full">
+                        </iframe>
+                    </div>
+                    <div className="lg:col-span-4 col-span-12">
+                        <div className="bg-primary/10 p-8 rounded-2xl relative z-10 overflow-hidden">
+                            <h4 className='text-dark text-3xl font-medium dark:text-white'>
+                                {item?.rate}
+                            </h4>
+                            <p className='text-sm text-dark/50 dark:text-white'>Cotización</p>
+                            <Link href="/contactus" className='py-4 px-8 bg-primary text-white rounded-full w-full block text-center hover:bg-dark duration-300 text-base mt-8 hover:cursor-pointer'>
+                                Contáctanos
+                            </Link>
+                        </div>
+                        {testimonials.slice(0, 1).map((item, index) => (
+                            <div key={index} className="border p-10 rounded-2xl border-dark/10 dark:border-white/20 mt-10 flex flex-col gap-6">
+                                <Icon icon="ph:house-simple" width={44} height={44} className="text-primary" />
+                                <p className='text-xm text-dark dark:text-white'>{item.review}</p>
+                                <div className="flex items-center gap-6">
+                                    <Image src={item.image} alt={item.name} width={400} height={500} className='w-20 h-20 rounded-2xl' unoptimized={true} />
+                                    <div className="">
+                                        <h3 className='text-xm text-dark dark:text-white'>{item.name}</h3>
+                                        <h4 className='text-base text-dark/50 dark:text-white/50'>{item.position}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
